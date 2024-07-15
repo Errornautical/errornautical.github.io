@@ -1,11 +1,15 @@
 const canvas = document.getElementById('dnaCanvas');
 const ctx = canvas.getContext('2d');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
 
 const dnaColor = 'rgba(26, 35, 126, 0.5)';
-const backgroundColor = 'rgba(0, 0, 0, 0.1)';
+const backgroundColor = 'rgba(245, 245, 245, 0.1)'; // Light gray to match the background
 
 class Nucleotide {
     constructor(x, y, z, character) {
@@ -47,13 +51,11 @@ for (let i = 0; i < strandLength; i++) {
     const z1 = Math.sin(angle) * radius;
     const x2 = Math.cos(angle + Math.PI) * radius;
     const z2 = Math.sin(angle + Math.PI) * radius;
-
-    dnaStrand1.push(new Nucleotide(x1, y, z1, Math.random() < 0.5 ? '1' : '0'));
-    dnaStrand2.push(new Nucleotide(x2, y, z2, Math.random() < 0.5 ? '1' : '0'));
+    dnaStrand1.push(new Nucleotide(x1, y, z1, Math.random() < 0.5 ? 'A' : 'T'));
+    dnaStrand2.push(new Nucleotide(x2, y, z2, Math.random() < 0.5 ? 'C' : 'G'));
 }
 
 let angle = 0;
-let lastScrollTop = 0;
 
 function animate() {
     ctx.fillStyle = backgroundColor;
@@ -63,23 +65,13 @@ function animate() {
         nucleotide.draw(angle);
     }
 
+    angle += 0.005; // Constant rotation speed
     requestAnimationFrame(animate);
 }
 
-function handleScroll() {
-    const st = window.pageYOffset || document.documentElement.scrollTop;
-    if (st > lastScrollTop) {
-        angle += 0.05;
-    } else {
-        angle -= 0.05;
-    }
-    lastScrollTop = st <= 0 ? 0 : st;
-}
-
-window.addEventListener('scroll', handleScroll);
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+window.addEventListener('resize', resizeCanvas);
+window.addEventListener('scroll', () => {
+    angle += 0.05; // Increase rotation on scroll
 });
 
 animate();
