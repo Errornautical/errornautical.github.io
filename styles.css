@@ -1,10 +1,11 @@
 :root {
     --primary-color: #3f51b5;
     --secondary-color: #7986cb;
-    --background-color: rgba(240, 240, 240, 0.9);
+    --background-color: #f5f5f5; /* Light gray background */
     --text-color: #333333;
-    --header-bg: rgba(26, 35, 126, 0.8);
-    --nav-bg: rgba(40, 53, 147, 0.8);
+    --header-bg: #1a237e;
+    --nav-bg: #283593;
+    --section-bg: #ffffff; /* White background for sections */
 }
 
 * {
@@ -28,6 +29,7 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
+    opacity: 0.1; /* Make the DNA animation more subtle */
 }
 
 header, nav, main, footer {
@@ -65,6 +67,14 @@ nav a {
 
 nav a:hover {
     background-color: rgba(57, 73, 171, 0.8);
+}
+
+main section {
+    background-color: var(--section-bg);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -113,12 +123,29 @@ footer {
     color: #ffffff;
 }
 
+#honours ul, #conferences ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#honours li, #conferences li {
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#membership p {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+}
+
 .publication {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
     margin-top: 20px;
-    text-align: center;
 }
 
 .publication p {
