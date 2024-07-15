@@ -6,7 +6,147 @@
     <title>Rijul Sharma - Bioinformatics Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #3f51b5;
+            --secondary-color: #7986cb;
+            --background-color: #f5f5f5; /* Light gray background */
+            --text-color: #333333;
+            --header-bg: #1a237e;
+            --nav-bg: #283593;
+            --section-bg: #ffffff; /* White background for sections */
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            overflow-x: hidden;
+        }
+        #dnaCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1; /* Make the DNA animation more subtle */
+        }
+        header, nav, main, footer {
+            padding: 5vw;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            background-color: var(--header-bg);
+            color: #ffffff;
+            text-align: center;
+        }
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+        }
+        nav {
+            background-color: var(--nav-bg);
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+        }
+        nav a:hover {
+            background-color: rgba(57, 73, 171, 0.8);
+        }
+        main section {
+            background-color: var(--section-bg);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            text-align: center;
+        }
+        h3 {
+            color: var(--secondary-color);
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+        }
+        a {
+            color: var(--secondary-color);
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        footer {
+            text-align: center;
+            background-color: var(--header-bg);
+            color: #ffffff;
+            margin-top: 20px;
+        }
+        .social-icons {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+        .social-icons a {
+            margin: 0 10px;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        .social-icons a:hover {
+            color: #ffffff;
+        }
+        #honours ul, #conferences ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        #honours li, #conferences li {
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        #membership p {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .publication {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .publication p {
+            text-align: justify;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        @media screen and (max-width: 600px) {
+            header, nav, main, footer {
+                padding: 3vw;
+            }
+            nav a {
+                padding: 5px 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <canvas id="dnaCanvas"></canvas>
@@ -103,6 +243,85 @@
     <footer>
         <p>&copy; 2024 Rijul Sharma. All rights reserved.</p>
     </footer>
-    <script src="script.js"></script>
+
+    <script>
+        const canvas = document.getElementById('dnaCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+
+        const dnaColor = 'rgba(26, 35, 126, 0.5)';
+        const backgroundColor = 'rgba(245, 245, 245, 0.1)'; // Light gray to match the background
+
+        class Nucleotide {
+            constructor(x, y, z, character) {
+                this.x = x;
+                this.y = y;
+                this.z = z;
+                this.character = character;
+            }
+
+            project(angle) {
+                const rotatedX = this.x * Math.cos(angle) - this.z * Math.sin(angle);
+                const rotatedZ = this.x * Math.sin(angle) + this.z * Math.cos(angle);
+                const scale = 1000 / (1000 + rotatedZ);
+                return {
+                    x: rotatedX * scale + canvas.width / 2,
+                    y: this.y * scale + canvas.height / 2,
+                    scale: scale
+                };
+            }
+
+            draw(angle) {
+                const projected = this.project(angle);
+                ctx.fillStyle = dnaColor;
+                ctx.font = `${14 * projected.scale}px "Source Code Pro"`;
+                ctx.fillText(this.character, projected.x, projected.y);
+            }
+        }
+
+        const dnaStrand1 = [];
+        const dnaStrand2 = [];
+        const strandLength = 100;
+        const radius = 200;
+        const verticalSpacing = 15;
+
+        for (let i = 0; i < strandLength; i++) {
+            const angle = (i / strandLength) * Math.PI * 4;
+            const y = i * verticalSpacing - (strandLength * verticalSpacing) / 2;
+            const x1 = Math.cos(angle) * radius;
+            const z1 = Math.sin(angle) * radius;
+            const x2 = Math.cos(angle + Math.PI) * radius;
+            const z2 = Math.sin(angle + Math.PI) * radius;
+            dnaStrand1.push(new Nucleotide(x1, y, z1, Math.random() < 0.5 ? 'A' : 'T'));
+            dnaStrand2.push(new Nucleotide(x2, y, z2, Math.random() < 0.5 ? 'C' : 'G'));
+        }
+
+        let angle = 0;
+
+        function animate() {
+            ctx.fillStyle = backgroundColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (const nucleotide of [...dnaStrand1, ...dnaStrand2]) {
+                nucleotide.draw(angle);
+            }
+
+            angle += 0.005; // Constant rotation speed
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('scroll', () => {
+            angle += 0.05; // Increase rotation on scroll
+        });
+
+        animate();
+    </script>
 </body>
 </html>
