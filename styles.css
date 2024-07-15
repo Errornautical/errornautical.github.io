@@ -1,8 +1,8 @@
 :root {
     --primary-color: #3f51b5;
     --secondary-color: #7986cb;
-    --background-color: rgba(0, 0, 0, 0.9);
-    --text-color: #e0e0e0;
+    --background-color: rgba(240, 240, 240, 0.9);
+    --text-color: #333333;
     --header-bg: rgba(26, 35, 126, 0.8);
     --nav-bg: rgba(40, 53, 147, 0.8);
 }
@@ -72,6 +72,7 @@ h2 {
     border-bottom: 2px solid var(--primary-color);
     padding-bottom: 10px;
     font-size: clamp(1.5rem, 4vw, 2rem);
+    text-align: center;
 }
 
 h3 {
@@ -112,11 +113,24 @@ footer {
     color: #ffffff;
 }
 
+.publication {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.publication p {
+    text-align: justify;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
 @media screen and (max-width: 600px) {
     header, nav, main, footer {
         padding: 3vw;
     }
-
     nav a {
         padding: 5px 10px;
     }
