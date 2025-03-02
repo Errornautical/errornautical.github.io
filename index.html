@@ -1,91 +1,243 @@
-<!-- Add this HTML structure to your existing content -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Your existing head content here -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Genesis Website</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rijul Sharma - Portfolio</title>
+  <style>
+    /* Global Styles for a retro terminal look */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #33FF33;
+      font-family: 'Courier New', Courier, monospace;
+      line-height: 1.6;
+    }
+    a {
+      color: #33FF33;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #33FF33;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      margin: 0 15px;
+      font-size: 1.1em;
+    }
+    .container {
+      width: 90%;
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #33FF33;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    section h2 {
+      border-bottom: 1px solid #33FF33;
+      padding-bottom: 5px;
+    }
+    .entry {
+      margin-bottom: 20px;
+    }
+    .entry h3 {
+      margin: 5px 0;
+      font-size: 1.3em;
+    }
+    .entry p {
+      margin: 3px 0;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid #33FF33;
+      font-size: 0.9em;
+    }
+    /* Retro blinking cursor effect */
+    .blink {
+      display: inline-block;
+      width: 10px;
+      background-color: #33FF33;
+      margin-left: 2px;
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { background-color: transparent; }
+    }
+  </style>
 </head>
 <body>
-    <canvas id="dnaCanvas"></canvas>
-
-    <header>
-        <h1>PROJECT EVANGELION</h1>
-        <p>Human Instrumentality Project - ver 2.0.25</p>
-    </header>
-    
+  <header>
+    <h1>RIJUL SHARMA</h1>
     <nav>
-        <a href="#about">ABOUT</a>
-        <a href="#research">RESEARCH</a>
-        <a href="#publications">PUBLICATIONS</a>
-        <a href="#honours">HONOURS</a>
-        <a href="#conferences">CONFERENCES</a>
-        <a href="#membership">MEMBERSHIP</a>
-        <a href="#contact">CONTACT</a>
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
     </nav>
-    
-    <main>
-        <section id="about">
-            <h2>About</h2>
-            <p>NERV Terminal - Authorized Personnel Only. Access to this information is restricted to personnel with Section 2 clearance or higher.</p>
-            <!-- Your existing about content -->
-        </section>
-        
-        <section id="research">
-            <h2>Research</h2>
-            <p>Current Research Status: [CLASSIFIED]</p>
-            <!-- Your existing research content -->
-        </section>
-        
-        <section id="publications">
-            <h2>Publications</h2>
-            <!-- Your existing publications content -->
-            <div class="publication">
-                <h3>Publication Title</h3>
-                <p>Publication details and abstract...</p>
-            </div>
-        </section>
-        
-        <section id="honours">
-            <h2>Honours</h2>
-            <ul>
-                <!-- Your existing honours content -->
-                <li>Award Name - Year</li>
-            </ul>
-        </section>
-        
-        <section id="conferences">
-            <h2>Conferences</h2>
-            <ul>
-                <!-- Your existing conferences content -->
-                <li>Conference Name - Location, Date</li>
-            </ul>
-        </section>
-        
-        <section id="membership">
-            <h2>Membership</h2>
-            <!-- Your existing membership content -->
-            <p>Member of Organization Name</p>
-        </section>
-        
-        <section id="contact">
-            <h2>Contact</h2>
-            <!-- Your existing contact content -->
-            <div class="social-icons">
-                <a href="#">✉</a>
-                <a href="#">☏</a>
-            </div>
-        </section>
-    </main>
-    
-    <footer>
-        <p>© 2025 GEHIRN. All rights reserved.</p>
-        <p class="small-text">This site contains information classified by the Human Instrumentality Committee.</p>
-    </footer>
+  </header>
 
-    <script src="script.js"></script>
+  <div class="container">
+    <!-- About Section -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        Welcome to my portfolio website. I am a Bioinformatics Engineer passionate about bridging the gap between computational biology and modern technology. I work with various tools and techniques in Python, R, Docker, and cloud computing to create efficient solutions.
+      </p>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+      <h2>Education</h2>
+      <div class="entry">
+        <h3>Master's degree in Systems Biology Bioinformatics &amp; Computational Biology</h3>
+        <p><strong>Institution:</strong> Panjab University, Chandigarh</p>
+        <p><strong>Duration:</strong> 2022 - 2024</p>
+        <p><strong>Percentage:</strong> 75%</p>
+      </div>
+      <div class="entry">
+        <h3>B.Sc. (Hons) in Agriculture</h3>
+        <p><strong>Institution:</strong> Baddi University of Emerging Sciences and Technology, Solan</p>
+        <p><strong>Duration:</strong> 2018 – 2022</p>
+        <p><strong>Percentage:</strong> 82.9%</p>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+      <h2>Work Experience</h2>
+      <div class="entry">
+        <h3>Bioinformatics Engineer at Shire Bio</h3>
+        <p><strong>Duration:</strong> Aug 2024 - Present</p>
+        <ul>
+          <li>Built and optimized Docker containers for bioinformatics tools on a SOC2-compliant cloud platform.</li>
+          <li>Managed deployment on staging environments with rigorous testing before production release.</li>
+          <li>Developed AI-generated bioinformatics pipelines for improved user acquisition strategy.</li>
+          <li>Enhanced cloud infrastructure and supported live unit testing across various bioinformatics domains.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <h3>Master’s Thesis Project</h3>
+        <p>
+          Identification of Genetic Association between Neurodegenerative Disease and Neurodevelopmental Disorder - A SysBiomics &amp; Machine Learning Approach.
+          <br />Mapping potential biomarkers or molecular signatures associated with neurological disorders during early developmental stages using Systems Biology, validated with Machine Learning models.
+        </p>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications">
+      <h2>Licenses &amp; Certifications</h2>
+      <ul>
+        <li>Bioconductor for Genomic Data Science - Coursera (Issued Feb 2023)</li>
+        <li>Python for Genomic Data Science - Coursera (Issued May 2023)</li>
+        <li>Machine Learning Algorithms with Python - freeCodeCamp (Issued Jul 2023)</li>
+        <li>Neural Networks and Deep Learning – Coursera (Issued Sep 2023)</li>
+        <li>COP+26 2021 International Climate Action Course – IARF (Issued May 2022)</li>
+      </ul>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="entry">
+        <h3>ML Model for Molecular Descriptor Evaluation</h3>
+        <ul>
+          <li>Developed a machine learning pipeline to predict molecular solubility using scikit-learn and pandas.</li>
+          <li>Implemented a Linear Regression model to analyze relationships between descriptors and logS values.</li>
+          <li>Engineered an evaluation framework using train-test splits and key metrics (MSE, R²).</li>
+          <li><strong>Technologies:</strong> Python, scikit-learn, pandas.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <h3>Fine-Tuning Mistral Large Language Model on Indian Agriculture Dataset</h3>
+        <ul>
+          <li>Utilized NLP techniques with the Hugging Face Transformers library for domain-specific fine-tuning.</li>
+          <li>Preprocessed an agriculture-focused dataset from Kaggle to ensure model compatibility.</li>
+          <li>Configured training with PyTorch, including mixed-precision training (fp16) and distributed training.</li>
+          <li><strong>Technologies:</strong> Python, Hugging Face, Jupyter Notebook, PyTorch, Kaggle, accelerate.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <h2>Skills</h2>
+      <p>
+        Python, R, Docker, Linux, AWS, API Integration, LLMs
+      </p>
+    </section>
+
+    <!-- Conferences & Workshops Section -->
+    <section id="conferences">
+      <h2>Conferences &amp; Workshops</h2>
+      <ul>
+        <li>CHASCON 2023 National Conference on Global Science for Global Wellbeing – Panjab University, Chandigarh</li>
+        <li>Webinar on Latest Research in Cutting Edge Cancer Research, Drug Development, Stem Cell Treatment and Tissue Engineering – Educare Taiwan with China Medical University, Taiwan</li>
+        <li>Transforming Tomorrow: Artificial Intelligence for Sustainable Agriculture, Health and Ecosystem Resilience – PU-IIT Ropar Regional Accelerator for Holistic Innovations Foundation</li>
+        <li>Workshop on Microbiome/Metagenome Data Analysis – Bioinformatics Facility, RGCB Trivandrum (by Dr. Jamshaid Ali)</li>
+      </ul>
+    </section>
+
+    <!-- Publication Section -->
+    <section id="publication">
+      <h2>Publication</h2>
+      <div class="entry">
+        <p>
+          Sahrawat, T. R., Muskan, Sharma, R., Dange, S., Patial, R., &amp; Gahlawat, S. K. (2024). Interactome Based Computational Approach to Identify Association Between Cardiomyopathy and Cardiovascular Disease. <em>Medinformatics</em>. 
+          <a href="https://doi.org/10.47852/bonviewMEDIN42023102" target="_blank">DOI Link</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        <strong>Email:</strong> <a href="mailto:rijul.doc@gmail.com">rijul.doc@gmail.com</a>
+        <br />
+        <strong>Phone:</strong> +91 8263054100
+        <br />
+        <strong>Website:</strong> <a href="https://errornautical.github.io/" target="_blank">errornautical.github.io</a>
+      </p>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2024 Rijul Sharma <span class="blink">&nbsp;</span></p>
+  </footer>
+
+  <script>
+    // Simple retro boot-up animation simulation
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.querySelector(".container");
+      container.style.opacity = 0;
+      setTimeout(() => {
+        let opacity = 0;
+        const interval = setInterval(() => {
+          opacity += 0.05;
+          container.style.opacity = opacity;
+          if (opacity >= 1) clearInterval(interval);
+        }, 30);
+      }, 500);
+    });
+  </script>
 </body>
 </html>
