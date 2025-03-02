@@ -1,358 +1,91 @@
+<!-- Add this HTML structure to your existing content -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Your existing head content here -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rijul Sharma - Bioinformatics Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #3f51b5;
-            --secondary-color: #7986cb;
-            --background-color: #f5f5f5;
-            --text-color: #333333;
-            --header-bg: #1a237e;
-            --nav-bg: #283593;
-            --section-bg: #ffffff;
-        }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-            overflow-x: hidden;
-        }
-        #dnaCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.1;
-        }
-        header, nav, main, footer {
-            padding: 5vw;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        header {
-            background-color: var(--header-bg);
-            color: #ffffff;
-            text-align: center;
-        }
-        h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-        }
-        nav {
-            background-color: var(--nav-bg);
-            text-align: center;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            padding: 10px 15px;
-            display: inline-block;
-            font-size: clamp(0.8rem, 2vw, 1rem);
-        }
-        nav a:hover {
-            background-color: rgba(57, 73, 171, 0.8);
-            transition: background-color 0.3s ease;
-        }
-        main section {
-            background-color: var(--section-bg);
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            text-align: center;
-        }
-        h3 {
-            color: var(--secondary-color);
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-        }
-        a {
-            color: var(--secondary-color);
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        ul {
-            padding-left: 20px;
-        }
-        footer {
-            text-align: center;
-            background-color: var(--header-bg);
-            color: #ffffff;
-            margin-top: 20px;
-        }
-        .social-icons {
-            font-size: clamp(1.5rem, 4vw, 2rem);
-        }
-        .social-icons a {
-            margin: 0 10px;
-            color: var(--secondary-color);
-            text-decoration: none;
-        }
-        .social-icons a:hover {
-            color: #ffffff;
-        }
-        #honours ul, #conferences ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        #honours li, #conferences li {
-            margin-bottom: 15px;
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        #membership p {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-        }
-       .publication {
-        background-color: #f9f9f9;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 20px;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        hyphens: auto;
-       }
-      .publication p {
-        text-align: justify;
-        margin: 0 auto;
-        max-width: 100%;
-        font-size: 14px;
-       }
-
-      @media screen and (max-width: 768px) {
-        .publication {
-            padding: 15px;
-        }
-        .publication p {
-            font-size: 12px;
-            text-align: left;
-        }
-    }
-</style>
+    <title>Neon Genesis Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <canvas id="dnaCanvas"></canvas>
+
     <header>
-        <h1>Rijul Sharma</h1>
-        <p>Bioinformatics | Data Science | Biostatistics | Artificial Intelligence | LLM/NLP </p>
+        <h1>PROJECT EVANGELION</h1>
+        <p>Human Instrumentality Project - ver 2.0.25</p>
     </header>
+    
     <nav>
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#honours">Honours & Awards</a>
-        <a href="#membership">Membership</a>
-        <a href="#conferences">Conferences</a>
-        <a href="#publications">Publications</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
+        <a href="#about">ABOUT</a>
+        <a href="#research">RESEARCH</a>
+        <a href="#publications">PUBLICATIONS</a>
+        <a href="#honours">HONOURS</a>
+        <a href="#conferences">CONFERENCES</a>
+        <a href="#membership">MEMBERSHIP</a>
+        <a href="#contact">CONTACT</a>
     </nav>
+    
     <main>
         <section id="about">
-            <h2>About Me</h2>
-            <p>A highly motivated professional with a strong background in Agricultural Sciences, Genomic Data Science and a proven track record of continuous learning and skill development. Proficient in Data analysis with R, Machine Learning with Python, Deep Learning, Linux, and Bioinformatics tools.</p>
+            <h2>About</h2>
+            <p>NERV Terminal - Authorized Personnel Only. Access to this information is restricted to personnel with Section 2 clearance or higher.</p>
+            <!-- Your existing about content -->
         </section>
-        <section id="education">
-            <h2>Education</h2>
-            <h3>Master's degree, Systems Biology Bioinformatics, and Computational Biology</h3>
-            <p>Panjab University, Chandigarh | 2022 - 2024</p>
-            <p>Percentage: 75%</p>
-            <h3>Bachelor of Science - B.Sc. (Hons), Agriculture</h3>
-            <p>Baddi University of Emerging Sciences and Technology, Solan | Aug 2018 - Jul 2022</p>
-            <p>Percentage: 82.9%</p>
+        
+        <section id="research">
+            <h2>Research</h2>
+            <p>Current Research Status: [CLASSIFIED]</p>
+            <!-- Your existing research content -->
         </section>
-        <section id="projects">
-            <h2>Projects</h2>
-            <h3>Master's Thesis Project</h3>
-            <p>Identification of Genetic Association between Neurodegenerative Disease and Neurodevelopmental Disorder - A SysBiomics & Machine Learning Approach.</p>
-            
-            <h3>Minor Projects</h3>
-            <ul>
-                <li>Interactome Computational Approach to identify the association between Cardiomyopathy and Cardiovascular Disease</li>
-                <li>Computational Drug Discovery- machine learning model using ChEMBL Database</li>
-                <li>Tool development- tool leveraging the machine learning operation to re-rank the DEGs using MRMR for the model selection</li>
-            </ul>
-            <h3>Additional Projects</h3>
-            <ul>
-                <li>ML Model for Molecular Descriptor Evaluation: Developed a machine learning pipeline to predict molecular solubility using descriptors, leveraging scikit-learn and pandas for data processing and model development.</li>
-                <li>Fine-Tuning Mistral Large Language Model on Indian Agriculture Dataset: Utilized advanced NLP techniques to fine-tune the open-source Mistral large language model for domain-specific tasks in Indian agriculture.</li>
-            </ul>
-        </section>
-        <section id="experience">
-            <h2>Experience</h2>
-            <h3>Bioinformatics Engineer</h3>
-            <p>Shire Bio | Aug 2024 - Present</p>
-            <ul>
-                <li>Built and optimized Docker containers for bioinformatics tools, ensuring smooth integration and functionality within the cloud-based, SOC2-compliant platform.</li>
-                <li>Oversaw tool deployment on staging environments, ensuring rigorous testing and high-quality performance before production.</li>
-                <li>Contributed to the app's user acquisition strategy by developing AI-generated bioinformatics pipelines targeting niche long-tail keywords.</li>
-                <li>Enhanced the platform's cloud infrastructure, supporting live unit testing, and running pipelines across various bioinformatics domains.</li>
-            </ul>
-        </section>
-        <section id="honours">
-            <h2>Honours & Awards</h2>
-            <ul>
-                <li>First Prize in Science Fair, Baddi University of Emerging Sciences and Technology, Solan (Feb 2019) - Prepared sustainable Insect traps for agricultural fields for the science fair and won the first prize at GEEK EXPO.</li>
-                <li>Secured 11th State Rank in 13th SOF National Cyber Olympiad (2014)</li>
-                <li>Class Representative during Master's Last Year (2023-24)</li>
-            </ul>
-        </section>
-        <section id="membership">
-            <h2>Membership</h2>
-            <p>Member of NASA Open Science and Data Repository Plant Analysis Working Group (2024)</p>
-        </section>
-        <section id="conferences">
-            <h2>Conferences & Workshops</h2>
-            <ul>
-                <li>CHASCON 2023 National conference on Global Science for Global Wellbeing - Panjab University, Chandigarh</li>
-                <li>Webinar on Latest Research in Cutting Edge Cancer Research, Drug Development, Stem Cell Treatment and Tissue Engineering – Educare Taiwan with China Medical University, Taiwan</li>
-                <li>Transforming Tomorrow: Artificial Intelligence for Sustainable Agriculture, Health and Ecosystem Resilience- PU-IIT Ropar Regional Accelerator for Holistic Innovations Foundation.</li>
-                <li>Workshop on Microbiome/Metagenome data analysis - Bioinformatics Facility, RGCB Trivandrum, by Dr. Jamshaid Ali.</li>
-            </ul>
-        </section>
+        
         <section id="publications">
             <h2>Publications</h2>
+            <!-- Your existing publications content -->
             <div class="publication">
-                <p>Sahrawat, T. R., Muskan, Sharma, R., Dange, S., Patial, R., & Gahlawat, S. K. (2024). Interactome Based Computational Approach to Identify Association Between Cardiomyopathy and Cardiovascular Disease. <em>Medinformatics</em>. https://doi.org/10.47852/bonviewMEDIN42023102</p>
+                <h3>Publication Title</h3>
+                <p>Publication details and abstract...</p>
             </div>
         </section>
-        <section id="skills">
-            <h2>Certificates</h2>
+        
+        <section id="honours">
+            <h2>Honours</h2>
             <ul>
-                <li>Bioconductor for Genomic Data Science</li>
-                <li>Python for Genomic Data Science</li>
-                <li>Machine Learning with Python</li>
-                <li>Neural Networks and Deep Learning</li>
-                <li>COP+26 2021 International Climate Action Course</li>
-                <li>Enhancing Soft Skills and Personality</li>
+                <!-- Your existing honours content -->
+                <li>Award Name - Year</li>
             </ul>
         </section>
+        
+        <section id="conferences">
+            <h2>Conferences</h2>
+            <ul>
+                <!-- Your existing conferences content -->
+                <li>Conference Name - Location, Date</li>
+            </ul>
+        </section>
+        
+        <section id="membership">
+            <h2>Membership</h2>
+            <!-- Your existing membership content -->
+            <p>Member of Organization Name</p>
+        </section>
+        
         <section id="contact">
             <h2>Contact</h2>
-            <p>Email: rijul.doc@gmail.com</p>
-            <p>Phone: +91 8263054100</p>
-           <div class="social-icons">
-                <a href="https://x.com/Errornautical" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                </a>
-                <a href="https://orcid.org/0009-0008-0966-5363" target="_blank"><i class="fab fa-orcid"></i></a>
-                <a href="https://github.com/Errornautical" target="_blank"><i class="fab fa-github"></i></a>
+            <!-- Your existing contact content -->
+            <div class="social-icons">
+                <a href="#">✉</a>
+                <a href="#">☏</a>
             </div>
         </section>
     </main>
+    
     <footer>
-        <p>&copy; 2024 Rijul Sharma. All rights reserved.</p>
+        <p>© 2025 GEHIRN. All rights reserved.</p>
+        <p class="small-text">This site contains information classified by the Human Instrumentality Committee.</p>
     </footer>
 
-    <script>
-        const canvas = document.getElementById('dnaCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        resizeCanvas();
-
-        const dnaColor = 'rgba(26, 35, 126, 0.5)';
-        const backgroundColor = 'rgba(245, 245, 245, 0.1)';
-
-        class Nucleotide {
-            constructor(x, y, z, character) {
-                this.x = x;
-                this.y = y;
-                this.z = z;
-                this.character = character;
-            }
-
-            project(angle) {
-                const rotatedX = this.x * Math.cos(angle) - this.z * Math.sin(angle);
-                const rotatedZ = this.x * Math.sin(angle) + this.z * Math.cos(angle);
-                const scale = 1000 / (1000 + rotatedZ);
-                return {
-                    x: rotatedX * scale + canvas.width / 2,
-                    y: this.y * scale + canvas.height / 2,
-                    scale: scale
-                };
-            }
-
-            draw(angle) {
-                const projected = this.project(angle);
-                ctx.fillStyle = dnaColor;
-                ctx.font = `${14 * projected.scale}px "Source Code Pro"`;
-                ctx.fillText(this.character, projected.x, projected.y);
-            }
-        }
-
-        const dnaStrand1 = [];
-        const dnaStrand2 = [];
-        const strandLength = 100;
-        const radius = 200;
-        const verticalSpacing = 15;
-
-        for (let i = 0; i < strandLength; i++) {
-            const angle = (i / strandLength) * Math.PI * 4;
-            const y = i * verticalSpacing - (strandLength * verticalSpacing) / 2;
-            const x1 = Math.cos(angle) * radius;
-            const z1 = Math.sin(angle) * radius;
-            const x2 = Math.cos(angle + Math.PI) * radius;
-            const z2 = Math.sin(angle + Math.PI) * radius;
-            dnaStrand1.push(new Nucleotide(x1, y, z1, Math.random() < 0.5 ? 'A' : 'T'));
-            dnaStrand2.push(new Nucleotide(x2, y, z2, Math.random() < 0.5 ? 'C' : 'G'));
-        }
-
-        let angle = 0;
-
-        function animate() {
-            ctx.fillStyle = backgroundColor;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            for (const nucleotide of [...dnaStrand1, ...dnaStrand2]) {
-                nucleotide.draw(angle);
-            }
-
-            angle += 0.005;
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('scroll', () => {
-            angle += 0.05;
-        });
-
-        animate();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
