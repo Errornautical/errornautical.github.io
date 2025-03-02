@@ -3,12 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rijul Sharma - Retro Portfolio</title>
-  <link rel="stylesheet" href="/src/styles.css" />
+  <title>Rijul Sharma | Retro Portfolio</title>
+  <style>
+    /* Global styles and reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      background: #000;
+      font-family: 'Courier New', Courier, monospace;
+      color: #33ff33;
+      overflow: hidden;
+    }
+    /* Fullscreen canvas for three.js background */
+    canvas#bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    /* Overlay that mimics a terminal window */
+    #terminal {
+      position: relative;
+      z-index: 2;
+      width: 90%;
+      max-width: 900px;
+      height: 90%;
+      margin: 5% auto;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #33ff33;
+      overflow-y: auto;
+      box-shadow: 0 0 20px #33ff33;
+    }
+    /* Header and navigation styling */
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    nav {
+      margin-bottom: 20px;
+    }
+    nav a {
+      color: #33ff33;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    /* Terminal text and typewriter effect */
+    .line {
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .typewriter {
+      display: inline-block;
+      overflow: hidden;
+      border-right: .15em solid #33ff33;
+      animation: caret 0.75s step-end infinite;
+    }
+    @keyframes caret {
+      50% { border-color: transparent; }
+    }
+    /* Section styling */
+    section { margin-bottom: 20px; }
+    section h2 {
+      border-bottom: 1px solid #33ff33;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+    /* Scrollbar styling */
+    #terminal::-webkit-scrollbar {
+      width: 8px;
+    }
+    #terminal::-webkit-scrollbar-thumb {
+      background: #33ff33;
+      border-radius: 4px;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.8em; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Overlay for CV/portfolio content -->
-  <div id="overlay">
+  <!-- Three.js canvas background -->
+  <canvas id="bg"></canvas>
+
+  <!-- Terminal overlay for portfolio content -->
+  <div id="terminal">
     <header>
       <h1>RIJUL SHARMA</h1>
       <nav>
@@ -21,84 +110,122 @@
       </nav>
     </header>
     <main>
+      <div class="line">
+        <span class="typewriter" id="typewriter"></span>
+      </div>
+      <!-- About Section -->
       <section id="about">
         <h2>About Me</h2>
-        <p>
-          I am a Bioinformatics Engineer passionate about bridging the gap between computational biology and modern technology.
+        <p class="line">
+          Bioinformatics Engineer. I blend computational biology with cutting-edge technology.
         </p>
       </section>
+      <!-- Education Section -->
       <section id="education">
         <h2>Education</h2>
-        <div class="entry">
-          <h3>Master's in Systems Biology Bioinformatics &amp; Computational Biology</h3>
-          <p><strong>Institution:</strong> Panjab University, Chandigarh</p>
-          <p><strong>Duration:</strong> 2022 - 2024</p>
-          <p><strong>Percentage:</strong> 75%</p>
-        </div>
-        <div class="entry">
-          <h3>B.Sc. (Hons) in Agriculture</h3>
-          <p><strong>Institution:</strong> Baddi University of Emerging Sciences and Technology, Solan</p>
-          <p><strong>Duration:</strong> 2018 – 2022</p>
-          <p><strong>Percentage:</strong> 82.9%</p>
-        </div>
+        <p class="line">
+Master's in Systems Biology Bioinformatics &amp; Computational Biology  
+Institution: Panjab University, Chandigarh | 2022 - 2024 | 75%
+        </p>
+        <p class="line">
+B.Sc. (Hons) in Agriculture  
+Institution: Baddi University of Emerging Sciences and Technology, Solan | 2018 – 2022 | 82.9%
+        </p>
       </section>
+      <!-- Experience Section -->
       <section id="experience">
-        <h2>Work Experience</h2>
-        <div class="entry">
-          <h3>Bioinformatics Engineer at Shire Bio</h3>
-          <p><strong>Duration:</strong> Aug 2024 - Present</p>
-          <ul>
-            <li>Optimized Docker containers for bioinformatics tools on a SOC2-compliant cloud platform.</li>
-            <li>Managed deployment on staging environments with rigorous testing.</li>
-            <li>Developed AI-generated bioinformatics pipelines for user acquisition.</li>
-            <li>Enhanced cloud infrastructure and supported live unit testing.</li>
-          </ul>
-        </div>
-        <div class="entry">
-          <h3>Master’s Thesis Project</h3>
-          <p>
-            Identification of Genetic Association between Neurodegenerative Disease and Neurodevelopmental Disorder using Systems Biology and Machine Learning.
-          </p>
-        </div>
+        <h2>Experience</h2>
+        <p class="line">
+Shire Bio – Bioinformatics Engineer (Aug 2024 - Present)
+        </p>
+        <ul class="line">
+          <li>Optimized Docker containers for bioinformatics tools.</li>
+          <li>Managed deployments with rigorous testing.</li>
+          <li>Developed AI-generated pipelines for user acquisition.</li>
+          <li>Enhanced cloud infrastructure with live testing.</li>
+        </ul>
+        <p class="line">
+Master’s Thesis: Mapping genetic associations between neurodegenerative and neurodevelopmental disorders.
+        </p>
       </section>
+      <!-- Projects Section -->
       <section id="projects">
         <h2>Projects</h2>
-        <div class="entry">
-          <h3>ML Model for Molecular Descriptor Evaluation</h3>
-          <ul>
-            <li>Developed a pipeline using scikit-learn and pandas to predict molecular solubility.</li>
-            <li>Implemented a Linear Regression model and evaluation framework (MSE, R²).</li>
-            <li><strong>Technologies:</strong> Python, scikit-learn, pandas.</li>
-          </ul>
-        </div>
-        <div class="entry">
-          <h3>Fine-Tuning Mistral LLM on Indian Agriculture Dataset</h3>
-          <ul>
-            <li>Utilized Hugging Face Transformers for domain-specific fine-tuning.</li>
-            <li>Preprocessed Kaggle data and trained with PyTorch using fp16 and distributed training.</li>
-            <li><strong>Technologies:</strong> Python, Hugging Face, PyTorch, Kaggle, accelerate.</li>
-          </ul>
-        </div>
+        <p class="line">
+ML Model for Molecular Descriptor Evaluation – Predicting molecular solubility with scikit-learn and pandas.
+        </p>
+        <p class="line">
+Fine-Tuning Mistral LLM on Indian Agriculture Dataset – Leveraging Hugging Face and PyTorch.
+        </p>
       </section>
+      <!-- Skills Section -->
       <section id="skills">
         <h2>Skills</h2>
-        <p>Python, R, Docker, Linux, AWS, API Integration, LLMs</p>
+        <p class="line">
+Python, R, Docker, Linux, AWS, API Integration, LLMs
+        </p>
       </section>
+      <!-- Contact Section -->
       <section id="contact">
         <h2>Contact</h2>
-        <p>
-          <strong>Email:</strong> <a href="mailto:rijul.doc@gmail.com">rijul.doc@gmail.com</a><br />
-          <strong>Phone:</strong> +91 8263054100<br />
-          <strong>Website:</strong> <a href="https://errornautical.github.io/" target="_blank">errornautical.github.io</a>
+        <p class="line">
+Email: <a href="mailto:rijul.doc@gmail.com" style="color:#33ff33;">rijul.doc@gmail.com</a>  
+Phone: +91 8263054100  
+Website: <a href="https://errornautical.github.io/" target="_blank" style="color:#33ff33;">errornautical.github.io</a>
         </p>
       </section>
     </main>
-    <footer>
-      <p>© 2024 Rijul Sharma</p>
-    </footer>
   </div>
-  <!-- Three.js Canvas for retro animated background -->
-  <canvas id="bg"></canvas>
-  <script type="module" src="/src/main.ts"></script>
+
+  <!-- Three.js and main script -->
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.module.js';
+
+    // Set up renderer
+    const canvas = document.getElementById('bg');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    // Scene and Camera
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 4;
+
+    // Create a subtle rotating wireframe shape (e.g., torus knot)
+    const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
+    const material = new THREE.MeshBasicMaterial({ color: 0x33ff33, wireframe: true });
+    const knot = new THREE.Mesh(geometry, material);
+    scene.add(knot);
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      knot.rotation.x += 0.005;
+      knot.rotation.y += 0.005;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Adjust on window resize
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    });
+
+    // Typewriter effect for intro text
+    const typewriterEl = document.getElementById('typewriter');
+    const introText = "Welcome to my retro terminal. Type 'help' for commands.";
+    let index = 0;
+    function typeWriter() {
+      if (index < introText.length) {
+        typewriterEl.textContent += introText.charAt(index);
+        index++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+    typeWriter();
+  </script>
 </body>
 </html>
