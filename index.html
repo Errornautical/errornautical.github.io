@@ -1,231 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rijul Sharma</title>
-  <style>
-    /* Global styles and reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      background: #000;
-      font-family: 'Courier New', Courier, monospace;
-      color: #33ff33;
-      overflow: hidden;
-    }
-    /* Fullscreen canvas for three.js background */
-    canvas#bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-    /* Overlay that mimics a terminal window */
-    #terminal {
-      position: relative;
-      z-index: 2;
-      width: 90%;
-      max-width: 900px;
-      height: 90%;
-      margin: 5% auto;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.85);
-      border: 2px solid #33ff33;
-      overflow-y: auto;
-      box-shadow: 0 0 20px #33ff33;
-    }
-    /* Header and navigation styling */
-    header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-    nav {
-      margin-bottom: 20px;
-    }
-    nav a {
-      color: #33ff33;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    /* Terminal text and typewriter effect */
-    .line {
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-    .typewriter {
-      display: inline-block;
-      overflow: hidden;
-      border-right: .15em solid #33ff33;
-      animation: caret 0.75s step-end infinite;
-    }
-    @keyframes caret {
-      50% { border-color: transparent; }
-    }
-    /* Section styling */
-    section { margin-bottom: 20px; }
-    section h2 {
-      border-bottom: 1px solid #33ff33;
-      padding-bottom: 5px;
-      margin-bottom: 10px;
-    }
-    /* Scrollbar styling */
-    #terminal::-webkit-scrollbar {
-      width: 8px;
-    }
-    #terminal::-webkit-scrollbar-thumb {
-      background: #33ff33;
-      border-radius: 4px;
-    }
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.8em; }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rijul Sharma | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Three.js canvas background -->
-  <canvas id="bg"></canvas>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">RS</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Terminal overlay for portfolio content -->
-  <div id="terminal">
-    <header>
-      <h1>RIJUL SHARMA</h1>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
     <main>
-      <div class="line">
-        <span class="typewriter" id="typewriter"></span>
-      </div>
-      <!-- About Section -->
-      <section id="about">
-        <h2>About Me</h2>
-        <p class="line">
-          Bioinformatics Engineer. I blend computational biology with cutting-edge technology.
-        </p>
-      </section>
-      <!-- Education Section -->
-      <section id="education">
-        <h2>Education</h2>
-        <p class="line">
-Master's in Systems Biology Bioinformatics &amp; Computational Biology  
-Institution: Panjab University, Chandigarh | 2022 - 2024 | 75%
-        </p>
-        <p class="line">
-B.Sc. (Hons) in Agriculture  
-Institution: Baddi University of Emerging Sciences and Technology, Solan | 2018 – 2022 | 82.9%
-        </p>
-      </section>
-      <!-- Experience Section -->
-      <section id="experience">
-        <h2>Experience</h2>
-        <p class="line">
-Shire Bio – Bioinformatics Engineer (Aug 2024 - Present)
-        </p>
-        <ul class="line">
-          <li>Optimized Docker containers for bioinformatics tools.</li>
-          <li>Managed deployments with rigorous testing.</li>
-          <li>Developed AI-generated pipelines for user acquisition.</li>
-          <li>Enhanced cloud infrastructure with live testing.</li>
-        </ul>
-        <p class="line">
-Master’s Thesis: Mapping genetic associations between neurodegenerative and neurodevelopmental disorders.
-        </p>
-      </section>
-      <!-- Projects Section -->
-      <section id="projects">
-        <h2>Projects</h2>
-        <p class="line">
-ML Model for Molecular Descriptor Evaluation – Predicting molecular solubility with scikit-learn and pandas.
-        </p>
-        <p class="line">
-Fine-Tuning Mistral LLM on Indian Agriculture Dataset – Leveraging Hugging Face and PyTorch.
-        </p>
-      </section>
-      <!-- Skills Section -->
-      <section id="skills">
-        <h2>Skills</h2>
-        <p class="line">
-Python, R, Docker, Linux, AWS, API Integration, LLMs
-        </p>
-      </section>
-      <!-- Contact Section -->
-      <section id="contact">
-        <h2>Contact</h2>
-        <p class="line">
-Email: <a href="mailto:rijul.doc@gmail.com" style="color:#33ff33;">rijul.doc@gmail.com</a>  
-Phone: +91 8263054100  
-Website: <a href="https://errornautical.github.io/" target="_blank" style="color:#33ff33;">errornautical.github.io</a>
-        </p>
-      </section>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="fade-in">Rijul Sharma</h1>
+                <p class="subtitle fade-in">Bioinformatics Engineer</p>
+                <p class="description fade-in">Blending computational biology with cutting-edge technology</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <h2 class="section-title">About Me</h2>
+            <div class="card-container">
+                <div class="card" data-card="about">
+                    <div class="card-icon"><i class="fas fa-user"></i></div>
+                    <h3>About</h3>
+                    <p>Learn more about my journey and expertise</p>
+                </div>
+                <div class="card" data-card="education">
+                    <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Education</h3>
+                    <p>My academic background and qualifications</p>
+                </div>
+                <div class="card" data-card="skills">
+                    <div class="card-icon"><i class="fas fa-code"></i></div>
+                    <h3>Skills</h3>
+                    <p>Technical expertise and tools</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <h2 class="section-title">Experience</h2>
+            <div class="card-container">
+                <div class="card" data-card="work">
+                    <div class="card-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>Work Experience</h3>
+                    <p>Professional journey and achievements</p>
+                </div>
+                <div class="card" data-card="research">
+                    <div class="card-icon"><i class="fas fa-flask"></i></div>
+                    <h3>Research</h3>
+                    <p>Academic research and publications</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <h2 class="section-title">Projects</h2>
+            <div class="card-container">
+                <div class="card" data-card="project1">
+                    <div class="card-icon"><i class="fas fa-brain"></i></div>
+                    <h3>ML Model for Molecular Descriptor</h3>
+                    <p>Predicting molecular solubility with scikit-learn</p>
+                </div>
+                <div class="card" data-card="project2">
+                    <div class="card-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Mistral LLM Fine-Tuning</h3>
+                    <p>Indian Agriculture Dataset Analysis</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> rijul.doc@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +91 8263054100</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/errornautical" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/your-profile" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://twitter.com/your-handle" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </section>
     </main>
-  </div>
 
-  <!-- Three.js and main script -->
-  <script type="module">
-    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.module.js';
+    <!-- Modal for card details -->
+    <div class="modal" id="cardModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body"></div>
+        </div>
+    </div>
 
-    // Set up renderer
-    const canvas = document.getElementById('bg');
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-
-    // Scene and Camera
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 4;
-
-    // Create a subtle rotating wireframe shape (e.g., torus knot)
-    const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
-    const material = new THREE.MeshBasicMaterial({ color: 0x33ff33, wireframe: true });
-    const knot = new THREE.Mesh(geometry, material);
-    scene.add(knot);
-
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-      knot.rotation.x += 0.005;
-      knot.rotation.y += 0.005;
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // Adjust on window resize
-    window.addEventListener('resize', () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-    });
-
-    // Typewriter effect for intro text
-    const typewriterEl = document.getElementById('typewriter');
-    const introText = "Welcome to my archive of projects and experiences.";
-    let index = 0;
-    function typeWriter() {
-      if (index < introText.length) {
-        typewriterEl.textContent += introText.charAt(index);
-        index++;
-        setTimeout(typeWriter, 50);
-      }
-    }
-    typeWriter();
-  </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
