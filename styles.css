@@ -13,6 +13,8 @@
     --background: #ffffff;
     --card-background: #f8fafc;
     --transition: all 0.3s ease;
+    --folder-color: #f3f4f6;
+    --folder-shadow: rgba(0, 0, 0, 0.1);
 }
 
 html {
@@ -24,6 +26,17 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background: var(--background);
+    perspective: 1000px;
+    overflow-x: hidden;
+}
+
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
 
 /* Navbar Styles */
@@ -64,6 +77,32 @@ body {
     color: var(--primary-color);
 }
 
+/* Sections Container */
+.sections-container {
+    position: relative;
+    padding-top: 80px;
+}
+
+/* Folder Styles */
+.section.folder {
+    min-height: 100vh;
+    padding: 2rem;
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    transition: transform 0.5s ease;
+}
+
+.folder-content {
+    background: var(--folder-color);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 10px 30px var(--folder-shadow);
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 /* Hero Section */
 .hero {
     height: 100vh;
@@ -99,6 +138,14 @@ body {
     padding: 5rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.section.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .section-title {
@@ -124,10 +171,11 @@ body {
     transition: var(--transition);
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform-style: preserve-3d;
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) rotateX(5deg);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -168,6 +216,19 @@ body {
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform-style: preserve-3d;
+    animation: modalOpen 0.3s ease forwards;
+}
+
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) rotateX(10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
 }
 
 .close-modal {
@@ -242,5 +303,9 @@ body {
     
     .card-container {
         grid-template-columns: 1fr;
+    }
+    
+    .folder-content {
+        padding: 1rem;
     }
 }

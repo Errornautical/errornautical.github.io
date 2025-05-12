@@ -504,6 +504,12 @@ const cardContent = {
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Three.js
+    initThreeJS();
+
+    // Initialize scroll animations
+    initScrollAnimations();
+
     // Set up smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -539,26 +545,14 @@ document.addEventListener('DOMContentLoaded', () => {
             hideModal();
         }
     });
+});
 
-    // Add fade-in animation to sections on scroll
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.section').forEach(section => {
-        observer.observe(section);
-    });
+// Handle window resize
+window.addEventListener('resize', () => {
+    // Update camera
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
 // Modal functions
@@ -583,3 +577,120 @@ function hideModal() {
 
 // Add smooth scroll behavior for the entire page
 document.documentElement.style.scrollBehavior = 'smooth';
+
+// Three.js setup
+let scene, camera, renderer;
+let particles = [];
+
+function initThreeJS() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+    // Add ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    // Add directional light
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight.position.set(0, 1, 1);
+    scene.add(directionalLight);
+
+    camera.position.z = 5;
+
+    // Create particles
+    createParticles();
+
+    animate();
+}
+
+function createParticles() {
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+
+    for (let i = 0; i < 1000; i++) {
+        const x = (Math.random() - 0.5) * 10;
+        const y = (Math.random() - 0.5) * 10;
+        const z = (Math.random() - 0.5) * 10;
+        vertices.push(x, y, z);
+    }
+
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+    const material = new THREE.PointsMaterial({
+        color: 0x2563eb,
+        size: 0.02,
+        transparent: true,
+        opacity: 0.5
+    });
+
+    particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    particles.rotation.x += 0.0005;
+    particles.rotation.y += 0.0005;
+
+    renderer.render(scene, camera);
+}
+
+// GSAP Scroll Animations
+function initScrollAnimations() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Animate sections on scroll
+    gsap.utils.toArray('.section.folder').forEach((section, i) => {
+        gsap.fromTo(section, 
+            {
+                opacity: 0,
+                y: 100,
+                rotateX: -15
+            },
+            {
+                opacity: 1,
+                y: 0,
+                rotateX: 0,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top center",
+                    end: "bottom center",
+                    toggleActions: "play none none reverse"
+                }
+            }
+        );
+    });
+
+    // Animate cards
+    gsap.utils.toArray('.card').forEach((card, i) => {
+        gsap.fromTo(card,
+            {
+                opacity: 0,
+                y: 50,
+                rotateX: -10
+            },
+            {
+                opacity: 1,
+                y: 0,
+                rotateX: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom",
+                    end: "bottom center",
+                    toggleActions: "play none none reverse"
+                }
+            }
+        );
+    });
+}
