@@ -164,3 +164,126 @@ function hideModal() {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
 }
+
+// Three.js ASCII Animation
+import * as THREE from 'https://cdn.skypack.dev/three@0.136.0';
+import { AsciiEffect } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/effects/AsciiEffect.js';
+
+let camera, scene, renderer, effect;
+let torus, particles;
+let mouseX = 0, mouseY = 0;
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
+
+const characters = '01AI/ML<>[]{}()*&^%$#@!~+-=';
+const asciiCharacters = characters.split('');
+
+init();
+animate();
+
+function init() {
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 50;
+
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0, 0, 0);
+
+    // Create torus
+    const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+    const material = new THREE.MeshPhongMaterial({ color: 0x2563eb });
+    torus = new THREE.Mesh(geometry, material);
+    scene.add(torus);
+
+    // Add particles
+    const particleGeometry = new THREE.BufferGeometry();
+    const particleCount = 1000;
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 100;
+        positions[i + 1] = (Math.random() - 0.5) * 100;
+        positions[i + 2] = (Math.random() - 0.5) * 100;
+
+        colors[i] = Math.random();
+        colors[i + 1] = Math.random();
+        colors[i + 2] = Math.random();
+    }
+
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const particleMaterial = new THREE.PointsMaterial({
+        size: 0.5,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8
+    });
+
+    particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+
+    // Add lights
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(0, 0, 1);
+    scene.add(light);
+
+    const ambientLight = new THREE.AmbientLight(0x404040);
+    scene.add(ambientLight);
+
+    // Setup renderer
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Setup ASCII effect
+    effect = new AsciiEffect(renderer, asciiCharacters, { invert: true });
+    effect.setSize(window.innerWidth, window.innerHeight);
+    effect.domElement.style.color = '#2563eb';
+    effect.domElement.style.backgroundColor = 'transparent';
+    effect.domElement.style.position = 'absolute';
+    effect.domElement.style.top = '0';
+    effect.domElement.style.left = '0';
+    effect.domElement.style.pointerEvents = 'none';
+    effect.domElement.style.zIndex = '-1';
+
+    document.getElementById('canvas-container').appendChild(effect.domElement);
+
+    // Event listeners
+    document.addEventListener('mousemove', onDocumentMouseMove);
+    window.addEventListener('resize', onWindowResize);
+}
+
+function onWindowResize() {
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    effect.setSize(window.innerWidth, window.innerHeight);
+}
+
+function onDocumentMouseMove(event) {
+    mouseX = (event.clientX - windowHalfX) / 100;
+    mouseY = (event.clientY - windowHalfY) / 100;
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate torus
+    torus.rotation.x += 0.01;
+    torus.rotation.y += 0.01;
+
+    // Rotate particles
+    particles.rotation.x += 0.001;
+    particles.rotation.y += 0.001;
+
+    // Move camera based on mouse position
+    camera.position.x += (mouseX - camera.position.x) * 0.05;
+    camera.position.y += (-mouseY - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    effect.render(scene, camera);
+}
