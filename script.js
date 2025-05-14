@@ -192,7 +192,7 @@ function init() {
     scene.background = new THREE.Color(0, 0, 0);
 
     // Create torus with more visible geometry
-    const geometry = new THREE.TorusGeometry(15, 5, 32, 100);
+    const geometry = new THREE.TorusGeometry(12, 4, 24, 100);
     const material = new THREE.MeshPhongMaterial({ 
         color: 0x2563eb,
         shininess: 100,
@@ -203,14 +203,14 @@ function init() {
 
     // Add particles with more density
     const particleGeometry = new THREE.BufferGeometry();
-    const particleCount = 3000;
+    const particleCount = 2000;
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount * 3; i += 3) {
-        positions[i] = (Math.random() - 0.5) * 150;
-        positions[i + 1] = (Math.random() - 0.5) * 150;
-        positions[i + 2] = (Math.random() - 0.5) * 150;
+        positions[i] = (Math.random() - 0.5) * 100;
+        positions[i + 1] = (Math.random() - 0.5) * 100;
+        positions[i + 2] = (Math.random() - 0.5) * 100;
 
         colors[i] = 0.3 + Math.random() * 0.7;
         colors[i + 1] = 0.3 + Math.random() * 0.7;
@@ -221,21 +221,21 @@ function init() {
     particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const particleMaterial = new THREE.PointsMaterial({
-        size: 1.2,
+        size: 0.8,
         vertexColors: true,
         transparent: true,
-        opacity: 0.9
+        opacity: 0.8
     });
 
     particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
 
     // Enhanced lighting
-    const light = new THREE.DirectionalLight(0xffffff, 2);
+    const light = new THREE.DirectionalLight(0xffffff, 1.5);
     light.position.set(0, 0, 1);
     scene.add(light);
 
-    const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
+    const ambientLight = new THREE.AmbientLight(0x404040, 1.2);
     scene.add(ambientLight);
 
     // Setup renderer with better quality
@@ -249,8 +249,8 @@ function init() {
     // Setup ASCII effect with better contrast
     effect = new AsciiEffect(renderer, asciiCharacters, { 
         invert: true,
-        resolution: 0.2,
-        strResolution: 0.6
+        resolution: 0.15,
+        strResolution: 0.5
     });
     effect.setSize(window.innerWidth, window.innerHeight);
     effect.domElement.style.color = '#2563eb';
@@ -261,9 +261,9 @@ function init() {
     effect.domElement.style.pointerEvents = 'none';
     effect.domElement.style.zIndex = '-1';
     effect.domElement.style.fontFamily = 'monospace';
-    effect.domElement.style.fontSize = '10px';
-    effect.domElement.style.lineHeight = '10px';
-    effect.domElement.style.opacity = '0.4';
+    effect.domElement.style.fontSize = '8px';
+    effect.domElement.style.lineHeight = '8px';
+    effect.domElement.style.opacity = '0.2';
 
     const canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {
