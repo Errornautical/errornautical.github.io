@@ -143,6 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
             hideModal();
         }
     });
+
+    // Initialize animation after DOM is loaded
+    init();
+    animate();
 });
 
 // Modal functions
@@ -178,9 +182,6 @@ let windowHalfY = window.innerHeight / 2;
 const characters = '01AI/ML<>[]{}()*&^%$#@!~+-=';
 const asciiCharacters = characters.split('');
 
-init();
-animate();
-
 function init() {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 50;
@@ -188,55 +189,64 @@ function init() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0, 0, 0);
 
-    // Create torus
-    const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-    const material = new THREE.MeshPhongMaterial({ color: 0x2563eb });
+    // Create torus with more visible geometry
+    const geometry = new THREE.TorusGeometry(12, 4, 24, 100);
+    const material = new THREE.MeshPhongMaterial({ 
+        color: 0x2563eb,
+        shininess: 100,
+        specular: 0x444444
+    });
     torus = new THREE.Mesh(geometry, material);
     scene.add(torus);
 
-    // Add particles
+    // Add particles with more density
     const particleGeometry = new THREE.BufferGeometry();
-    const particleCount = 1000;
+    const particleCount = 2000;
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount * 3; i += 3) {
-        positions[i] = (Math.random() - 0.5) * 100;
-        positions[i + 1] = (Math.random() - 0.5) * 100;
-        positions[i + 2] = (Math.random() - 0.5) * 100;
+        positions[i] = (Math.random() - 0.5) * 120;
+        positions[i + 1] = (Math.random() - 0.5) * 120;
+        positions[i + 2] = (Math.random() - 0.5) * 120;
 
-        colors[i] = Math.random();
-        colors[i + 1] = Math.random();
-        colors[i + 2] = Math.random();
+        colors[i] = 0.2 + Math.random() * 0.8;
+        colors[i + 1] = 0.2 + Math.random() * 0.8;
+        colors[i + 2] = 0.2 + Math.random() * 0.8;
     }
 
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const particleMaterial = new THREE.PointsMaterial({
-        size: 0.5,
+        size: 0.8,
         vertexColors: true,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.9
     });
 
     particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
 
-    // Add lights
-    const light = new THREE.DirectionalLight(0xffffff, 1);
+    // Enhanced lighting
+    const light = new THREE.DirectionalLight(0xffffff, 1.5);
     light.position.set(0, 0, 1);
     scene.add(light);
 
-    const ambientLight = new THREE.AmbientLight(0x404040);
+    const ambientLight = new THREE.AmbientLight(0x404040, 1.2);
     scene.add(ambientLight);
 
-    // Setup renderer
-    renderer = new THREE.WebGLRenderer();
+    // Setup renderer with better quality
+    renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
 
-    // Setup ASCII effect
-    effect = new AsciiEffect(renderer, asciiCharacters, { invert: true });
+    // Setup ASCII effect with better contrast
+    effect = new AsciiEffect(renderer, asciiCharacters, { 
+        invert: true,
+        resolution: 0.15,
+        strResolution: 0.5
+    });
     effect.setSize(window.innerWidth, window.innerHeight);
     effect.domElement.style.color = '#2563eb';
     effect.domElement.style.backgroundColor = 'transparent';
@@ -245,8 +255,14 @@ function init() {
     effect.domElement.style.left = '0';
     effect.domElement.style.pointerEvents = 'none';
     effect.domElement.style.zIndex = '-1';
+    effect.domElement.style.fontFamily = 'monospace';
+    effect.domElement.style.fontSize = '8px';
+    effect.domElement.style.lineHeight = '8px';
 
-    document.getElementById('canvas-container').appendChild(effect.domElement);
+    const canvasContainer = document.getElementById('canvas-container');
+    if (canvasContainer) {
+        canvasContainer.appendChild(effect.domElement);
+    }
 
     // Event listeners
     document.addEventListener('mousemove', onDocumentMouseMove);
@@ -272,17 +288,17 @@ function onDocumentMouseMove(event) {
 function animate() {
     requestAnimationFrame(animate);
 
-    // Rotate torus
-    torus.rotation.x += 0.01;
-    torus.rotation.y += 0.01;
+    // Smoother rotation
+    torus.rotation.x += 0.008;
+    torus.rotation.y += 0.008;
 
-    // Rotate particles
-    particles.rotation.x += 0.001;
-    particles.rotation.y += 0.001;
+    // Slower particle rotation
+    particles.rotation.x += 0.0005;
+    particles.rotation.y += 0.0005;
 
-    // Move camera based on mouse position
-    camera.position.x += (mouseX - camera.position.x) * 0.05;
-    camera.position.y += (-mouseY - camera.position.y) * 0.05;
+    // Smoother camera movement
+    camera.position.x += (mouseX - camera.position.x) * 0.03;
+    camera.position.y += (-mouseY - camera.position.y) * 0.03;
     camera.lookAt(scene.position);
 
     effect.render(scene, camera);
