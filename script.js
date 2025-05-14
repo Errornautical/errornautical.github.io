@@ -163,4 +163,4 @@ function hideModal() {
     const modal = document.getElementById('cardModal');
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
-} 
+}
