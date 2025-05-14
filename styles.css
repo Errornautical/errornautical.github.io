@@ -43,16 +43,17 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
 }
 
 .nav-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 1.2rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -62,18 +63,47 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: translateY(-2px);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
 }
 
 .nav-links a {
     color: var(--text-color);
     text-decoration: none;
-    margin-left: 2rem;
     font-weight: 500;
-    transition: var(--transition);
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
 }
 
 .nav-links a:hover {
     color: var(--primary-color);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
 }
 
 /* Sections Container */
@@ -91,32 +121,26 @@ body {
 .section.folder {
     position: relative;
     margin: 0 auto;
-    max-width: 900px;
+    max-width: 1000px;
     min-height: 60vh;
-    background: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.85);
     border-radius: 1.5rem;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border: 1px solid rgba(255,255,255,0.18);
-    transition: 
-        transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), 
-        box-shadow 0.8s cubic-bezier(0.23, 1, 0.32, 1), 
-        opacity 0.5s, 
-        filter 0.5s;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
     will-change: transform, box-shadow, opacity, filter;
     opacity: 0.7;
     filter: blur(2px) grayscale(0.1);
-    transform: scale(0.97) rotateX(10deg) translateY(40px);
-    z-index: 1;
+    transform: scale(0.97) translateY(40px);
 }
 
 .section.folder.active {
     opacity: 1 !important;
     filter: none !important;
-    transform: scale(1.01) rotateX(0deg) translateY(0) !important;
-    box-shadow: 0 16px 48px 0 rgba(37, 99, 235, 0.13), 0 2px 8px 0 rgba(0,0,0,0.10);
-    z-index: 2;
+    transform: scale(1) translateY(0) !important;
+    box-shadow: 0 16px 48px 0 rgba(37, 99, 235, 0.15);
 }
 
 .section.folder:not(.active) {
@@ -128,11 +152,24 @@ body {
 
 .section-title {
     text-align: left;
-    font-size: 2.2rem;
-    margin-bottom: 2rem;
+    font-size: 2.4rem;
+    margin-bottom: 2.5rem;
     color: var(--primary-color);
     letter-spacing: -1px;
     font-weight: 700;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px;
 }
 
 .folder-content {
@@ -152,54 +189,52 @@ body {
 }
 
 .card {
-    background: rgba(255,255,255,0.85);
-    border-radius: 1rem;
-    padding: 2rem 1.5rem;
+    background: rgba(255,255,255,0.9);
+    border-radius: 1.2rem;
+    padding: 2.5rem 2rem;
     height: 100%;
-    min-height: 200px;
+    min-height: 220px;
     display: flex;
     flex-direction: column;
     text-align: left;
-    transition: 
-        box-shadow 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-        transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-        background 0.3s;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.07);
-    border: 1px solid rgba(37, 99, 235, 0.07);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+    border: 1px solid rgba(37, 99, 235, 0.08);
     position: relative;
     overflow: hidden;
 }
 
 .card:hover {
-    background: rgba(37, 99, 235, 0.08);
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.18);
-    transform: translateY(-8px) scale(1.03) rotateX(2deg);
+    background: rgba(37, 99, 235, 0.03);
+    box-shadow: 0 12px 32px rgba(37, 99, 235, 0.15);
+    transform: translateY(-8px);
     border-color: var(--primary-color);
 }
 
-.card-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+.card-icon {
+    font-size: 2.4rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
 }
 
-.card-icon {
-    font-size: 2.2rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+.card:hover .card-icon {
+    transform: scale(1.1);
 }
 
 .card h3 {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     color: var(--text-color);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 600;
+    line-height: 1.3;
 }
 
 .card p {
     color: var(--light-text);
-    font-size: 1rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
     flex: 1;
 }
 
@@ -254,34 +289,46 @@ body {
 /* Contact Section */
 .contact-container {
     text-align: center;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
+    padding: 2rem;
 }
 
 .contact-info {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    background: rgba(255,255,255,0.9);
+    padding: 2.5rem;
+    border-radius: 1.2rem;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.1);
 }
 
 .contact-info p {
-    margin: 1rem 0;
+    margin: 1.2rem 0;
     color: var(--text-color);
+    font-size: 1.1rem;
 }
 
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 2.5rem;
+    margin-top: 2rem;
 }
 
 .social-links a {
     color: var(--text-color);
-    font-size: 1.5rem;
-    transition: var(--transition);
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
+    padding: 0.8rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
 }
 
 .social-links a:hover {
     color: var(--primary-color);
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.2);
 }
 
 /* Animations */
@@ -300,24 +347,42 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2.5rem;
+    .nav-content {
+        padding: 1rem;
     }
     
     .nav-links {
-        display: none;
+        gap: 1.5rem;
     }
     
-    .section {
-        padding: 3rem 1rem;
+    .nav-links a {
+        font-size: 1rem;
     }
     
-    .card-container {
-        grid-template-columns: 1fr;
+    .section-title {
+        font-size: 2rem;
     }
     
-    .folder-content {
-        padding: 1rem;
+    .card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        gap: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .contact-info {
+        padding: 1.5rem;
+    }
+    
+    .social-links {
+        gap: 1.5rem;
     }
 }
 
