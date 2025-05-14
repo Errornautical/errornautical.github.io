@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialize animation after DOM is loaded
+    // Initialize animation immediately
     init();
     animate();
 });
@@ -183,14 +183,16 @@ const characters = '01AI/ML<>[]{}()*&^%$#@!~+-=';
 const asciiCharacters = characters.split('');
 
 function init() {
+    // Create camera
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 50;
 
+    // Create scene
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0, 0, 0);
 
     // Create torus with more visible geometry
-    const geometry = new THREE.TorusGeometry(12, 4, 24, 100);
+    const geometry = new THREE.TorusGeometry(15, 5, 32, 100);
     const material = new THREE.MeshPhongMaterial({ 
         color: 0x2563eb,
         shininess: 100,
@@ -201,25 +203,25 @@ function init() {
 
     // Add particles with more density
     const particleGeometry = new THREE.BufferGeometry();
-    const particleCount = 2000;
+    const particleCount = 3000;
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount * 3; i += 3) {
-        positions[i] = (Math.random() - 0.5) * 120;
-        positions[i + 1] = (Math.random() - 0.5) * 120;
-        positions[i + 2] = (Math.random() - 0.5) * 120;
+        positions[i] = (Math.random() - 0.5) * 150;
+        positions[i + 1] = (Math.random() - 0.5) * 150;
+        positions[i + 2] = (Math.random() - 0.5) * 150;
 
-        colors[i] = 0.2 + Math.random() * 0.8;
-        colors[i + 1] = 0.2 + Math.random() * 0.8;
-        colors[i + 2] = 0.2 + Math.random() * 0.8;
+        colors[i] = 0.3 + Math.random() * 0.7;
+        colors[i + 1] = 0.3 + Math.random() * 0.7;
+        colors[i + 2] = 0.3 + Math.random() * 0.7;
     }
 
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const particleMaterial = new THREE.PointsMaterial({
-        size: 0.8,
+        size: 1.2,
         vertexColors: true,
         transparent: true,
         opacity: 0.9
@@ -229,23 +231,26 @@ function init() {
     scene.add(particles);
 
     // Enhanced lighting
-    const light = new THREE.DirectionalLight(0xffffff, 1.5);
+    const light = new THREE.DirectionalLight(0xffffff, 2);
     light.position.set(0, 0, 1);
     scene.add(light);
 
-    const ambientLight = new THREE.AmbientLight(0x404040, 1.2);
+    const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
     scene.add(ambientLight);
 
     // Setup renderer with better quality
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer = new THREE.WebGLRenderer({ 
+        antialias: true,
+        alpha: true 
+    });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
     // Setup ASCII effect with better contrast
     effect = new AsciiEffect(renderer, asciiCharacters, { 
         invert: true,
-        resolution: 0.15,
-        strResolution: 0.5
+        resolution: 0.2,
+        strResolution: 0.6
     });
     effect.setSize(window.innerWidth, window.innerHeight);
     effect.domElement.style.color = '#2563eb';
@@ -256,12 +261,15 @@ function init() {
     effect.domElement.style.pointerEvents = 'none';
     effect.domElement.style.zIndex = '-1';
     effect.domElement.style.fontFamily = 'monospace';
-    effect.domElement.style.fontSize = '8px';
-    effect.domElement.style.lineHeight = '8px';
+    effect.domElement.style.fontSize = '10px';
+    effect.domElement.style.lineHeight = '10px';
+    effect.domElement.style.opacity = '0.4';
 
     const canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {
         canvasContainer.appendChild(effect.domElement);
+    } else {
+        console.error('Canvas container not found!');
     }
 
     // Event listeners
@@ -289,16 +297,16 @@ function animate() {
     requestAnimationFrame(animate);
 
     // Smoother rotation
-    torus.rotation.x += 0.008;
-    torus.rotation.y += 0.008;
+    torus.rotation.x += 0.005;
+    torus.rotation.y += 0.005;
 
     // Slower particle rotation
-    particles.rotation.x += 0.0005;
-    particles.rotation.y += 0.0005;
+    particles.rotation.x += 0.0003;
+    particles.rotation.y += 0.0003;
 
     // Smoother camera movement
-    camera.position.x += (mouseX - camera.position.x) * 0.03;
-    camera.position.y += (-mouseY - camera.position.y) * 0.03;
+    camera.position.x += (mouseX - camera.position.x) * 0.02;
+    camera.position.y += (-mouseY - camera.position.y) * 0.02;
     camera.lookAt(scene.position);
 
     effect.render(scene, camera);
