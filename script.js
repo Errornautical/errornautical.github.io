@@ -169,18 +169,14 @@ function hideModal() {
     document.body.style.overflow = 'auto';
 }
 
-// Three.js ASCII Animation
+// Three.js Neural Network Animation
 import * as THREE from 'https://cdn.skypack.dev/three@0.136.0';
-import { AsciiEffect } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/effects/AsciiEffect.js';
 
-let camera, scene, renderer, effect;
-let torus, particles;
+let camera, scene, renderer;
+let particles, lines;
 let mouseX = 0, mouseY = 0;
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
-
-const characters = '01AI/ML<>[]{}()*&^%$#@!~+-=';
-const asciiCharacters = characters.split('');
 
 function init() {
     // Create camera
@@ -189,56 +185,89 @@ function init() {
 
     // Create scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0, 0, 0);
+    scene.background = new THREE.Color(0x000000);
 
-    // Create torus with more visible geometry
-    const geometry = new THREE.TorusGeometry(12, 4, 24, 100);
-    const material = new THREE.MeshPhongMaterial({ 
-        color: 0x2563eb,
-        shininess: 100,
-        specular: 0x444444
-    });
-    torus = new THREE.Mesh(geometry, material);
-    scene.add(torus);
-
-    // Add particles with more density
+    // Create particles (nodes)
+    const particleCount = 100;
     const particleGeometry = new THREE.BufferGeometry();
-    const particleCount = 2000;
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
-    for (let i = 0; i < particleCount * 3; i += 3) {
-        positions[i] = (Math.random() - 0.5) * 100;
-        positions[i + 1] = (Math.random() - 0.5) * 100;
-        positions[i + 2] = (Math.random() - 0.5) * 100;
+    // Create a grid-like structure for particles
+    const gridSize = Math.sqrt(particleCount);
+    const spacing = 10;
+    let index = 0;
 
-        colors[i] = 0.3 + Math.random() * 0.7;
-        colors[i + 1] = 0.3 + Math.random() * 0.7;
-        colors[i + 2] = 0.3 + Math.random() * 0.7;
+    for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+            positions[index * 3] = (i - gridSize / 2) * spacing;
+            positions[index * 3 + 1] = (j - gridSize / 2) * spacing;
+            positions[index * 3 + 2] = 0;
+
+            // Grey color with slight variation
+            const grey = 0.3 + Math.random() * 0.2;
+            colors[index * 3] = grey;
+            colors[index * 3 + 1] = grey;
+            colors[index * 3 + 2] = grey;
+
+            index++;
+        }
     }
 
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const particleMaterial = new THREE.PointsMaterial({
-        size: 0.8,
+        size: 2,
         vertexColors: true,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.8,
+        sizeAttenuation: true
     });
 
     particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
 
-    // Enhanced lighting
-    const light = new THREE.DirectionalLight(0xffffff, 1.5);
-    light.position.set(0, 0, 1);
-    scene.add(light);
+    // Create lines (connections)
+    const lineGeometry = new THREE.BufferGeometry();
+    const linePositions = [];
+    const lineColors = [];
 
-    const ambientLight = new THREE.AmbientLight(0x404040, 1.2);
-    scene.add(ambientLight);
+    // Create connections between nearby particles
+    const particlePositions = particleGeometry.attributes.position.array;
+    for (let i = 0; i < particleCount; i++) {
+        for (let j = i + 1; j < particleCount; j++) {
+            const dx = particlePositions[i * 3] - particlePositions[j * 3];
+            const dy = particlePositions[i * 3 + 1] - particlePositions[j * 3 + 1];
+            const distance = Math.sqrt(dx * dx + dy * dy);
 
-    // Setup renderer with better quality
+            // Connect particles that are close to each other
+            if (distance < spacing * 1.5) {
+                linePositions.push(
+                    particlePositions[i * 3], particlePositions[i * 3 + 1], particlePositions[i * 3 + 2],
+                    particlePositions[j * 3], particlePositions[j * 3 + 1], particlePositions[j * 3 + 2]
+                );
+
+                // Add grey color for the line
+                const grey = 0.2 + Math.random() * 0.1;
+                lineColors.push(grey, grey, grey, grey, grey, grey);
+            }
+        }
+    }
+
+    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+    lineGeometry.setAttribute('color', new THREE.Float32BufferAttribute(lineColors, 3));
+
+    const lineMaterial = new THREE.LineBasicMaterial({
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.3
+    });
+
+    lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(lines);
+
+    // Setup renderer
     renderer = new THREE.WebGLRenderer({ 
         antialias: true,
         alpha: true 
@@ -246,28 +275,9 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    // Setup ASCII effect with better contrast
-    effect = new AsciiEffect(renderer, asciiCharacters, { 
-        invert: true,
-        resolution: 0.15,
-        strResolution: 0.5
-    });
-    effect.setSize(window.innerWidth, window.innerHeight);
-    effect.domElement.style.color = '#2563eb';
-    effect.domElement.style.backgroundColor = 'transparent';
-    effect.domElement.style.position = 'absolute';
-    effect.domElement.style.top = '0';
-    effect.domElement.style.left = '0';
-    effect.domElement.style.pointerEvents = 'none';
-    effect.domElement.style.zIndex = '-1';
-    effect.domElement.style.fontFamily = 'monospace';
-    effect.domElement.style.fontSize = '8px';
-    effect.domElement.style.lineHeight = '8px';
-    effect.domElement.style.opacity = '0.2';
-
     const canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {
-        canvasContainer.appendChild(effect.domElement);
+        canvasContainer.appendChild(renderer.domElement);
     } else {
         console.error('Canvas container not found!');
     }
@@ -285,7 +295,6 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    effect.setSize(window.innerWidth, window.innerHeight);
 }
 
 function onDocumentMouseMove(event) {
@@ -296,18 +305,16 @@ function onDocumentMouseMove(event) {
 function animate() {
     requestAnimationFrame(animate);
 
-    // Smoother rotation
-    torus.rotation.x += 0.005;
-    torus.rotation.y += 0.005;
+    // Rotate the entire network
+    particles.rotation.x += 0.001;
+    particles.rotation.y += 0.001;
+    lines.rotation.x += 0.001;
+    lines.rotation.y += 0.001;
 
-    // Slower particle rotation
-    particles.rotation.x += 0.0003;
-    particles.rotation.y += 0.0003;
-
-    // Smoother camera movement
+    // Move camera based on mouse position
     camera.position.x += (mouseX - camera.position.x) * 0.02;
     camera.position.y += (-mouseY - camera.position.y) * 0.02;
     camera.lookAt(scene.position);
 
-    effect.render(scene, camera);
+    renderer.render(scene, camera);
 }
