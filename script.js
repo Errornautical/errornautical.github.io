@@ -188,27 +188,34 @@ function init() {
     scene.background = new THREE.Color(0x000000);
 
     // Create particles (nodes)
-    const particleCount = 100;
+    const particleCount = 150; // Increased particle count
     const particleGeometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
-    // Create a grid-like structure for particles
+    // Create a more dynamic structure for particles
     const gridSize = Math.sqrt(particleCount);
-    const spacing = 10;
+    const spacing = 12;
     let index = 0;
 
     for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
+            // Add some randomness to the z-position
+            const z = Math.random() * 10 - 5;
             positions[index * 3] = (i - gridSize / 2) * spacing;
             positions[index * 3 + 1] = (j - gridSize / 2) * spacing;
-            positions[index * 3 + 2] = 0;
+            positions[index * 3 + 2] = z;
 
-            // Grey color with slight variation
-            const grey = 0.3 + Math.random() * 0.2;
-            colors[index * 3] = grey;
-            colors[index * 3 + 1] = grey;
-            colors[index * 3 + 2] = grey;
+            // Add color variation based on position
+            const hue = (i / gridSize + j / gridSize) * 0.5;
+            const saturation = 0.5;
+            const lightness = 0.5 + Math.random() * 0.2;
+            
+            // Convert HSL to RGB
+            const rgb = hslToRgb(hue, saturation, lightness);
+            colors[index * 3] = rgb[0];
+            colors[index * 3 + 1] = rgb[1];
+            colors[index * 3 + 2] = rgb[2];
 
             index++;
         }
@@ -218,7 +225,7 @@ function init() {
     particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const particleMaterial = new THREE.PointsMaterial({
-        size: 2,
+        size: 2.5,
         vertexColors: true,
         transparent: true,
         opacity: 0.8,
@@ -239,18 +246,32 @@ function init() {
         for (let j = i + 1; j < particleCount; j++) {
             const dx = particlePositions[i * 3] - particlePositions[j * 3];
             const dy = particlePositions[i * 3 + 1] - particlePositions[j * 3 + 1];
-            const distance = Math.sqrt(dx * dx + dy * dy);
+            const dz = particlePositions[i * 3 + 2] - particlePositions[j * 3 + 2];
+            const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
             // Connect particles that are close to each other
-            if (distance < spacing * 1.5) {
+            if (distance < spacing * 1.8) {
                 linePositions.push(
                     particlePositions[i * 3], particlePositions[i * 3 + 1], particlePositions[i * 3 + 2],
                     particlePositions[j * 3], particlePositions[j * 3 + 1], particlePositions[j * 3 + 2]
                 );
 
-                // Add grey color for the line
-                const grey = 0.2 + Math.random() * 0.1;
-                lineColors.push(grey, grey, grey, grey, grey, grey);
+                // Add color for the line based on the connected particles
+                const color1 = new THREE.Color(
+                    colors[i * 3],
+                    colors[i * 3 + 1],
+                    colors[i * 3 + 2]
+                );
+                const color2 = new THREE.Color(
+                    colors[j * 3],
+                    colors[j * 3 + 1],
+                    colors[j * 3 + 2]
+                );
+
+                lineColors.push(
+                    color1.r, color1.g, color1.b,
+                    color2.r, color2.g, color2.b
+                );
             }
         }
     }
@@ -261,7 +282,7 @@ function init() {
     const lineMaterial = new THREE.LineBasicMaterial({
         vertexColors: true,
         transparent: true,
-        opacity: 0.3
+        opacity: 0.4
     });
 
     lines = new THREE.LineSegments(lineGeometry, lineMaterial);
@@ -305,16 +326,43 @@ function onDocumentMouseMove(event) {
 function animate() {
     requestAnimationFrame(animate);
 
-    // Rotate the entire network
-    particles.rotation.x += 0.001;
-    particles.rotation.y += 0.001;
-    lines.rotation.x += 0.001;
-    lines.rotation.y += 0.001;
+    // More dynamic rotation based on mouse position
+    const rotationSpeed = 0.0005;
+    particles.rotation.x += rotationSpeed + (mouseX * 0.0001);
+    particles.rotation.y += rotationSpeed + (mouseY * 0.0001);
+    lines.rotation.x = particles.rotation.x;
+    lines.rotation.y = particles.rotation.y;
 
-    // Move camera based on mouse position
-    camera.position.x += (mouseX - camera.position.x) * 0.02;
-    camera.position.y += (-mouseY - camera.position.y) * 0.02;
+    // Move camera based on mouse position with smoother interpolation
+    camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
+    camera.position.y += (-mouseY * 2 - camera.position.y) * 0.02;
     camera.lookAt(scene.position);
 
     renderer.render(scene, camera);
+}
+
+// Helper function to convert HSL to RGB
+function hslToRgb(h, s, l) {
+    let r, g, b;
+
+    if (s === 0) {
+        r = g = b = l;
+    } else {
+        const hue2rgb = (p, q, t) => {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1/6) return p + (q - p) * 6 * t;
+            if (t < 1/2) return q;
+            if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+            return p;
+        };
+
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+    }
+
+    return [r, g, b];
 }

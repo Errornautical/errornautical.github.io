@@ -136,8 +136,9 @@ body {
 .section.folder {
     position: relative;
     margin: 0 auto;
-    max-width: 1000px;
-    min-height: 60vh;
+    max-width: 1400px;
+    min-height: auto;
+    padding: 2rem;
     background: rgba(255,255,255,0.98);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -188,18 +189,18 @@ body {
 }
 
 .folder-content {
-    padding: 2.5rem 2rem 2rem 2rem;
+    padding: 3rem 2rem;
     background: transparent;
     border-radius: 1.5rem;
     box-shadow: none;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
     justify-content: center;
 }
 
@@ -221,6 +222,8 @@ body {
     position: relative;
     overflow: hidden;
     z-index: 1;
+    animation: float 6s ease-in-out infinite;
+    animation-delay: calc(var(--card-index) * 0.2s);
 }
 
 .card:hover {
@@ -413,4 +416,75 @@ body {
         flex-direction: column;
         gap: 1.2rem;
     }
+}
+
+/* Hero Section Styles */
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 2rem;
+    position: relative;
+}
+
+.hero-content h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+
+.hero-content .subtitle {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.hero-content .description {
+    font-size: 1.25rem;
+    color: var(--light-text);
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.hero-cta {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.hero-cta a {
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.hero-cta .primary-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+.hero-cta .secondary-btn {
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.hero-cta a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* Add a floating animation to cards */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
 }
