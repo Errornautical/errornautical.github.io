@@ -185,10 +185,10 @@ function init() {
 
     // Create scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
+    scene.background = new THREE.Color(0xf0f7ff); // Light blue background
 
     // Create particles (nodes)
-    const particleCount = 150; // Increased particle count
+    const particleCount = 150;
     const particleGeometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -206,9 +206,9 @@ function init() {
             positions[index * 3 + 1] = (j - gridSize / 2) * spacing;
             positions[index * 3 + 2] = z;
 
-            // Add color variation based on position
-            const hue = (i / gridSize + j / gridSize) * 0.5;
-            const saturation = 0.5;
+            // Add blue color variation based on position
+            const hue = 0.6 + (i / gridSize + j / gridSize) * 0.1; // Blue hue range
+            const saturation = 0.7;
             const lightness = 0.5 + Math.random() * 0.2;
             
             // Convert HSL to RGB
